@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidSafe Search - Safe & Fun Learning</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #F7B731;
+            --success: #2ECC71;
+            --background: #F8FAFC;
+            --text: #2D3748;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+
+        .nav-button:hover {
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 1.5rem;
+            gap: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #64748B;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .search-modes {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mode-button {
+            background: white;
+            border: 2px solid transparent;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .mode-button.active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            padding-right: 4rem;
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.15);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-button:hover {
+            background: #357ABD;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .feature-description {
+            color: #64748B;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-modes {
+                flex-wrap: wrap;
+            }
+
+            .mode-button {
+                flex: 1;
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                🛡️ KidSafe Search
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-button">📚 Learn</button>
+                <button class="nav-button">⭐ Rewards</button>
+                <button class="nav-button">👤 Parent Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <h1>Explore Safely, Learn Freely! 🚀</h1>
+            <p>Your friendly guide to discovering amazing things on the internet</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-modes">
+                <button class="mode-button active">🔍 Everything</button>
+                <button class="mode-button">📚 Homework Help</button>
+                <button class="mode-button">🎮 Fun & Games</button>
+                <button class="mode-button">🎨 Arts & Crafts</button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="What would you like to learn about?" aria-label="Search">
+                <button class="search-button">🔍</button>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Safe Browsing</h3>
+                <p class="feature-description">Every search is checked to keep you safe while exploring</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Kid-Friendly Results</h3>
+                <p class="feature-description">Find exactly what you need with age-appropriate content</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Learn & Earn</h3>
+                <p class="feature-description">Earn points and badges while you learn new things</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Creative Mode</h3>
+                <p class="feature-description">Discover fun activities and creative projects</p>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/dist/index.min.js"></script>
+    <script>
+        import { env, pipeline } from '@huggingface/inference';
+
+        // Configuration
+        const APP_CONFIG = {
+            HUGGINGFACE_API_KEY: 'YOUR_HUGGINGFACE_API_KEY',
+            SAFE_SEARCH_MODES: {
+                EVERYTHING: { id: 'everything', label: '🔍 Everything' },
+                HOMEWORK: { id: 'homework', label: '📚 Homework Help' },
+                GAMES: { id: 'games', label: '🎮 Fun & Games' },
+                ARTS: { id: 'arts', label: '🎨 Arts & Crafts' }
+            },
+            SAFETY_THRESHOLDS: {
+                UNSAFE_SCORE: 0.7,
+                UNSAFE_CATEGORIES: ['sexual', 'violent', 'hate']
+            }
+        };
+        
+        class SafeSearchApp {
+            constructor() {
+                this.initializeDOM();
+                this.userProfile = new UserProfile();
+                this.searchManager = new SearchManager(this.userProfile);
+                this.uiManager = new UIManager(this.searchManager);
+                this.contentAnalysisPipeline = null;
+                this.initContentAnalysis();
+            }
+        
+            initializeDOM() {
+                this.searchInput = document.querySelector('.search-input');
+                this.searchButton = document.querySelector('.search-button');
+                this.modeButtons = document.querySelectorAll('.mode-button');
+            }
+        
+            async initContentAnalysis() {
+                try {
+                    env.apiKey = APP_CONFIG.HUGGINGFACE_API_KEY;
+                    this.contentAnalysisPipeline = await pipeline(
+                        'text-classification', 
+                        'Anthropic/content-safety-text-classifier'
+                    );
+                } catch (error) {
+                    console.error('Content analysis init failed:', error);
+                }
+            }
+        
+            async checkContentSafety(text) {
+                if (!this.contentAnalysisPipeline) return false;
+        
+                try {
+                    const results = await this.contentAnalysisPipeline(text);
+                    return !results.some(
+                        result => APP_CONFIG.SAFETY_THRESHOLDS.UNSAFE_CATEGORIES.includes(result.label) && 
+                                  result.score > APP_CONFIG.SAFETY_THRESHOLDS.UNSAFE_SCORE
+                    );
+                } catch (error) {
+                    console.error('Content safety check failed:', error);
+                    return false;
+                }
+            }
+        }
+        
+        class UserProfile {
+            constructor() {
+                this.points = 0;
+                this.searchHistory = [];
+                this.achievements = [];
+            }
+        
+            addPoints(points) {
+                this.points += points;
+                this.checkAchievements();
+            }
+        
+            recordSearch(query, mode) {
+                this.searchHistory.push({
+                    query,
+                    mode,
+                    timestamp: new Date()
+                });
+            }
+        
+            checkAchievements() {
+                const achievementRules = [
+                    { name: 'Curious Explorer', threshold: 50 },
+                    { name: 'Knowledge Master', threshold: 200 }
+                ];
+        
+                achievementRules.forEach(rule => {
+                    if (this.points >= rule.threshold && 
+                        !this.achievements.includes(rule.name)) {
+                        this.achievements.push(rule.name);
+                        this.notifyAchievement(rule.name);
+                    }
+                });
+            }
+        
+            notifyAchievement(achievement) {
+                const achievementPopup = document.createElement('div');
+                achievementPopup.classList.add('achievement-popup');
+                achievementPopup.innerHTML = `🏆 New Achievement: ${achievement}!`;
+                document.body.appendChild(achievementPopup);
+                
+                setTimeout(() => {
+                    achievementPopup.remove();
+                }, 3000);
+            }
+        }
+        
+        class SearchManager {
+            constructor(userProfile) {
+                this.userProfile = userProfile;
+                this.canvas = this.createCanvas();
+            }
+        
+            createCanvas() {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'search-results-canvas';
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.zIndex = '1000';
+                canvas.style.backgroundColor = 'white';
+                document.body.appendChild(canvas);
+                return canvas;
+            }
+        
+            async performSearch(query, mode) {
+                try {
+                    // Simulate search with points tracking
+                    const basePoints = 5;
+                    const modeBonus = mode === 'Homework Help' ? 2 : 1;
+                    const totalPoints = basePoints + modeBonus;
+        
+                    this.userProfile.recordSearch(query, mode);
+                    this.userProfile.addPoints(totalPoints);
+        
+                    // In a real app, implement actual safe search
+                    this.renderSearchResultsOnCanvas([
+                        { 
+                            title: `Search Results for "${query}"`, 
+                            snippet: `Mode: ${mode}`, 
+                            points: totalPoints 
+                        }
+                    ]);
+        
+                } catch (error) {
+                    this.renderErrorOnCanvas(error);
+                }
+            }
+        
+            renderSearchResultsOnCanvas(results) {
+                const ctx = this.canvas.getContext('2d');
+                ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                ctx.font = '16px Arial';
+                ctx.fillStyle = 'black';
+        
+                results.forEach((result, index) => {
+                    const y = 50 + index * 100;
+                    ctx.fillText(result.title, 50, y);
+                    ctx.fillText(result.snippet, 50, y + 30);
+                    ctx.fillText(`Points Earned: ${result.points}`, 50, y + 60);
+                });
+            }
+        
+            renderErrorOnCanvas(error) {
+                const ctx = this.canvas.getContext('2d');
+                ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                ctx.font = '20px Arial';
+                ctx.fillStyle = 'red';
+                ctx.fillText('Search Error: ' + error.message, 50, 100);
+            }
+        }
+        
+        class UIManager {
+            constructor(searchManager) {
+                this.searchManager = searchManager;
+                this.initEventListeners();
+                this.animateHeroSection();
+            }
+        
+            initEventListeners() {
+                const searchInput = document.querySelector('.search-input');
+                const searchButton = document.querySelector('.search-button');
+                const modeButtons = document.querySelectorAll('.mode-button');
+        
+                // Mode selection
+                modeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        modeButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                    });
+                });
+        
+                // Search triggers
+                searchButton.addEventListener('click', this.handleSearch.bind(this));
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.handleSearch();
+                });
+            }
+        
+            handleSearch() {
+                const searchInput = document.querySelector('.search-input');
+                const activeMode = document.querySelector('.mode-button.active');
+                const query = searchInput.value.trim();
+        
+                if (!query) {
+                    alert('Please enter a search term');
+                    return;
+                }
+        
+                this.searchManager.performSearch(query, activeMode.textContent);
+                searchInput.value = '';
+            }
+        
+            animateHeroSection() {
+                const hero = document.querySelector('.hero');
+                hero.style.opacity = '0';
+                hero.style.transform = 'translateY(20px)';
+                hero.style.transition = 'all 0.5s ease-out';
+                
+                setTimeout(() => {
+                    hero.style.opacity = '1';
+                    hero.style.transform = 'translateY(0)';
+                }, 100);
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new SafeSearchApp();
+        });
+        
+        export { SafeSearchApp, UserProfile, SearchManager, UIManager };
+    </script>
+</body>
+</html>
+export default performSearch
