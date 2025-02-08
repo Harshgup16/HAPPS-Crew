@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KidSafe Search - Safe & Fun Learning</title>
-    <style>
+    <link rel="stylesheet" href="./k.css">
+    <!-- <style>
         :root {
             --primary: #4A90E2;
             --secondary: #F7B731;
@@ -222,7 +223,7 @@
                 min-width: 140px;
             }
         }
-    </style>
+    </style> -->
 </head>
 <body>
     <header class="header">
@@ -285,20 +286,20 @@
             </div>
         </div>
     </main>
-
-    <script>
-        // Mode selection functionality
-        const modeButtons = document.querySelectorAll('.mode-button');
-        const searchInput = document.querySelector('.search-input');
-        const searchButton = document.querySelector('.search-button');
+    <script src="script.js"> 
+    // <script>
+    //     // Mode selection functionality
+    //     const modeButtons = document.querySelectorAll('.mode-button');
+    //     const searchInput = document.querySelector('.search-input');
+    //     const searchButton = document.querySelector('.search-button');
         
-        const BLOCK_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
-        let strikes = parseInt(localStorage.getItem('strikes') || '0');
-        const MAX_STRIKES = 3;
-        let blockEndTime = parseInt(localStorage.getItem('blockEndTime') || '0');
+    //     const BLOCK_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
+    //     let strikes = parseInt(localStorage.getItem('strikes') || '0');
+    //     const MAX_STRIKES = 3;
+    //     let blockEndTime = parseInt(localStorage.getItem('blockEndTime') || '0');
         
-        const PARENT_EMAIL = sessionStorage.getItem('parentEmail') || 'parent@example.com';
-        const CHILD_NAME = sessionStorage.getItem('childName') || 'User';
+    //     const PARENT_EMAIL = sessionStorage.getItem('parentEmail') || 'parent@example.com';
+    //     const CHILD_NAME = sessionStorage.getItem('childName') || 'User';
 
 
 
@@ -307,186 +308,187 @@
 
 
 
-        <!-- TODO: "SAARE restrictedWords WORDS AND blockedWebsites KI LIST NIKAL KE BHAR DENSA BYEEEEEEEEE ULLLLLLUU" -->
+    //     <!-- TODO: "SAARE restrictedWords WORDS AND blockedWebsites KI LIST NIKAL KE BHAR DENSA BYEEEEEEEEE ULLLLLLUU" -->
 
-        const restrictedWords = [
-            // Explicit terms
-            'explicit', 'nude', 'naked', 'sex', 'porn', 'xxx', 'adult', 'mature',
-            'erotic', 'erotica', 'intimate', 'private', 'sensual', 'seductive',
-            'provocative', 'lewd', 'lascivious', 'indecent', 'obscene', 'filthy',
-            'dirty', 'raunchy', 'racy', 'risque', 'bawdy', 'coarse', 'crude',
-            'vulgar', 'profane', 'off-color', 'offensive', 'indecency', 'smut',
-            'smutty', 'blue', 'ribald', 'salacious', 'prurient', 'lurid', 'lecherous',
-            // Violent terms
-            'violent', 'violence', 'aggressive', 'aggression', 'hostile', 'hostility',
-            'abuse', 'abusive', 'assault', 'attack', 'brawl', 'fight', 'beat',
-            'punch', 'kick', 'stab', 'shoot', 'kill', 'murder', 'homicide', 'manslaughter',
-            'mayhem', 'chaos', 'anarchy', 'terrorism', 'terrorist', 'terrorize',
-            'intimidate', 'threaten', 'menace', 'bully', 'harass', 'torment', 'torture',
-            // Inappropriate terms
-            'inappropriate', 'offensive', 'insult', 'insulting', 'derogatory',
-            'disrespect', 'disrespectful', 'disparaging', 'belittling', 'mocking',
-            'teasing', 'taunting', 'ridicule', 'scoff', 'sneer', 'jeer', 'gibe',
-            'jibe', 'taunt', 'snub', 'slur', 'slight', 'affront', 'aspersion',
-            'calumny', 'defamation', 'libel', 'slander', 'vilify', 'villify',
-            'denigrate', 'degrade', 'demeaning', 'humiliate', 'humiliating',
-        ];
+    //     const restrictedWords = [
+    //         // Explicit terms
+    //         'explicit', 'nude', 'naked', 'sex', 'porn', 'xxx', 'adult', 'mature',
+    //         'erotic', 'erotica', 'intimate', 'private', 'sensual', 'seductive',
+    //         'provocative', 'lewd', 'lascivious', 'indecent', 'obscene', 'filthy',
+    //         'dirty', 'raunchy', 'racy', 'risque', 'bawdy', 'coarse', 'crude',
+    //         'vulgar', 'profane', 'off-color', 'offensive', 'indecency', 'smut',
+    //         'smutty', 'blue', 'ribald', 'salacious', 'prurient', 'lurid', 'lecherous',
+    //         // Violent terms
+    //         'violent', 'violence', 'aggressive', 'aggression', 'hostile', 'hostility',
+    //         'abuse', 'abusive', 'assault', 'attack', 'brawl', 'fight', 'beat',
+    //         'punch', 'kick', 'stab', 'shoot', 'kill', 'murder', 'homicide', 'manslaughter',
+    //         'mayhem', 'chaos', 'anarchy', 'terrorism', 'terrorist', 'terrorize',
+    //         'intimidate', 'threaten', 'menace', 'bully', 'harass', 'torment', 'torture',
+    //         // Inappropriate terms
+    //         'inappropriate', 'offensive', 'insult', 'insulting', 'derogatory',
+    //         'disrespect', 'disrespectful', 'disparaging', 'belittling', 'mocking',
+    //         'teasing', 'taunting', 'ridicule', 'scoff', 'sneer', 'jeer', 'gibe',
+    //         'jibe', 'taunt', 'snub', 'slur', 'slight', 'affront', 'aspersion',
+    //         'calumny', 'defamation', 'libel', 'slander', 'vilify', 'villify',
+    //         'denigrate', 'degrade', 'demeaning', 'humiliate', 'humiliating',
+    //     ];
 
-        const blockedWebsites = [
-            'https://www.exampleadultsite.com',
-            'https://www.examplegamblingsite.com',
-            'https://www.exampleillegalsite.com',
-        ];
+    //     const blockedWebsites = [
+    //         'https://www.exampleadultsite.com',
+    //         'https://www.examplegamblingsite.com',
+    //         'https://www.exampleillegalsite.com',
+         
+    //     ];
 
-        function containsRestrictedWords(query) {
-            const words = query.toLowerCase().split(/\s+/);
-            return words.some(word => restrictedWords.includes(word));
-        }
+    //     function containsRestrictedWords(query) {
+    //         const words = query.toLowerCase().split(/\s+/);
+    //         return words.some(word => restrictedWords.includes(word));
+    //     }
 
-        function isBlocked() {
-            return Date.now() < blockEndTime;
-        }
+    //     function isBlocked() {
+    //         return Date.now() < blockEndTime;
+    //     }
 
-        function getRemainingBlockTime() {
-            const remaining = Math.ceil((blockEndTime - Date.now()) / 1000);
-            const minutes = Math.floor(remaining / 60);
-            const seconds = remaining % 60;
-            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
+    //     function getRemainingBlockTime() {
+    //         const remaining = Math.ceil((blockEndTime - Date.now()) / 1000);
+    //         const minutes = Math.floor(remaining / 60);
+    //         const seconds = remaining % 60;
+    //         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    //     }
 
-        function setBlock() {
-            blockEndTime = Date.now() + BLOCK_DURATION;
-            localStorage.setItem('blockEndTime', blockEndTime);
-            disableSearch();
-            startBlockTimer();
-        }
+    //     function setBlock() {
+    //         blockEndTime = Date.now() + BLOCK_DURATION;
+    //         localStorage.setItem('blockEndTime', blockEndTime);
+    //         disableSearch();
+    //         startBlockTimer();
+    //     }
 
-        function startBlockTimer() {
-            const timer = setInterval(() => {
-                if (!isBlocked()) {
-                    enableSearch();
-                    clearInterval(timer);
-                } else {
-                    updateBlockMessage();
-                }
-            }, 1000);
-        }
+    //     function startBlockTimer() {
+    //         const timer = setInterval(() => {
+    //             if (!isBlocked()) {
+    //                 enableSearch();
+    //                 clearInterval(timer);
+    //             } else {
+    //                 updateBlockMessage();
+    //             }
+    //         }, 1000);
+    //     }
 
-        function disableSearch() {
-            searchInput.disabled = true;
-            searchButton.disabled = true;
-            searchInput.placeholder = `Search blocked for ${getRemainingBlockTime()}`;
-        }
+    //     function disableSearch() {
+    //         searchInput.disabled = true;
+    //         searchButton.disabled = true;
+    //         searchInput.placeholder = `Search blocked for ${getRemainingBlockTime()}`;
+    //     }
 
-        function enableSearch() {
-            searchInput.disabled = false;
-            searchButton.disabled = false;
-            searchInput.placeholder = "Enter your search";
-        }
+    //     function enableSearch() {
+    //         searchInput.disabled = false;
+    //         searchButton.disabled = false;
+    //         searchInput.placeholder = "Enter your search";
+    //     }
 
-        function updateBlockMessage() {
-            searchInput.placeholder = `Search blocked for ${getRemainingBlockTime()}`;
-        }
+    //     function updateBlockMessage() {
+    //         searchInput.placeholder = `Search blocked for ${getRemainingBlockTime()}`;
+    //     }
 
-        function incrementStrikes(searchQuery) {
-            strikes++;
-            localStorage.setItem('strikes', strikes);
+    //     function incrementStrikes(searchQuery) {
+    //         strikes++;
+    //         localStorage.setItem('strikes', strikes);
             
-            if (strikes >= MAX_STRIKES) {
-                notifyParent(searchQuery);
-                setBlock();
-                strikes = 0;
-                localStorage.setItem('strikes', strikes);
-            }
-        }
+    //         if (strikes >= MAX_STRIKES) {
+    //             notifyParent(searchQuery);
+    //             setBlock();
+    //             strikes = 0;
+    //             localStorage.setItem('strikes', strikes);
+    //         }
+    //     }
 
-        async function notifyParent(searchQuery) {
-            try {
-                const response = await fetch('/api/notify-parent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        parentEmail: PARENT_EMAIL,
-                        childName: CHILD_NAME,
-                        searchQuery: searchQuery,
-                        timestamp: new Date().toISOString(),
-                        strikeCount: MAX_STRIKES,
-                        blockDuration: BLOCK_DURATION / 60000
-                    })
-                });
+    //     async function notifyParent(searchQuery) {
+    //         try {
+    //             const response = await fetch('/api/notify-parent', {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({
+    //                     parentEmail: PARENT_EMAIL,
+    //                     childName: CHILD_NAME,
+    //                     searchQuery: searchQuery,
+    //                     timestamp: new Date().toISOString(),
+    //                     strikeCount: MAX_STRIKES,
+    //                     blockDuration: BLOCK_DURATION / 60000
+    //                 })
+    //             });
 
-                if (!response.ok) {
-                    console.error('Failed to send parent notification');
-                }
-            } catch (error) {
-                console.error('Error sending notification:', error);
-            }
-        }
+    //             if (!response.ok) {
+    //                 console.error('Failed to send parent notification');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error sending notification:', error);
+    //         }
+    //     }
 
-        function performSearch() {
-            if (isBlocked()) {
-                alert(`Search is blocked for ${getRemainingBlockTime()}`);
-                return;
-            }
+    //     function performSearch() {
+    //         if (isBlocked()) {
+    //             alert(`Search is blocked for ${getRemainingBlockTime()}`);
+    //             return;
+    //         }
 
-            const query = searchInput.value.trim();
+    //         const query = searchInput.value.trim();
             
-            if (!query) {
-                alert('Please enter a search term');
-                return;
-            }
+    //         if (!query) {
+    //             alert('Please enter a search term');
+    //             return;
+    //         }
 
-            if (containsRestrictedWords(query)) {
-                incrementStrikes(query);
-                const remainingStrikes = MAX_STRIKES - strikes;
-                alert(`Warning: Inappropriate search detected. ${remainingStrikes} warnings remaining before block.`);
-                searchInput.value = '';
-                return;
-            }
+    //         if (containsRestrictedWords(query)) {
+    //             incrementStrikes(query);
+    //             const remainingStrikes = MAX_STRIKES - strikes;
+    //             alert(`Warning: Inappropriate search detected. ${remainingStrikes} warnings remaining before block.`);
+    //             searchInput.value = '';
+    //             return;
+    //         }
 
-            const searchUrl = `https://duckduckgo.com/?${new URLSearchParams({
-                q: query,
-                kp: '-1',
-                kl: 'us-en',
-                kd: '-1'
-            })}`;
+    //         const searchUrl = `https://duckduckgo.com/?${new URLSearchParams({
+    //             q: query,
+    //             kp: '-1',
+    //             kl: 'us-en',
+    //             kd: '-1'
+    //         })}`;
             
-            window.open(searchUrl, '_blank');
-            searchInput.value = '';
-        }
+    //         window.open(searchUrl, '_blank');
+    //         searchInput.value = '';
+    //     }
 
-        // Initialize everything when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check block status
-            if (isBlocked()) {
-                disableSearch();
-                startBlockTimer();
-            }
+    //     // Initialize everything when DOM is ready
+    //     document.addEventListener('DOMContentLoaded', () => {
+    //         // Check block status
+    //         if (isBlocked()) {
+    //             disableSearch();
+    //             startBlockTimer();
+    //         }
 
-            // Hero animation
-            const hero = document.querySelector('.hero');
-            hero.style.opacity = '0';
-            hero.style.transform = 'translateY(20px)';
-            hero.style.transition = 'all 0.5s ease-out';
+    //         // Hero animation
+    //         const hero = document.querySelector('.hero');
+    //         hero.style.opacity = '0';
+    //         hero.style.transform = 'translateY(20px)';
+    //         hero.style.transition = 'all 0.5s ease-out';
             
-            setTimeout(() => {
-                hero.style.opacity = '1';
-                hero.style.transform = 'translateY(0)';
-            }, 100);
+    //         setTimeout(() => {
+    //             hero.style.opacity = '1';
+    //             hero.style.transform = 'translateY(0)';
+    //         }, 100);
 
-            // Add event listeners (only once)
-            modeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    modeButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
+    //         // Add event listeners (only once)
+    //         modeButtons.forEach(button => {
+    //             button.addEventListener('click', () => {
+    //                 modeButtons.forEach(btn => btn.classList.remove('active'));
+    //                 button.classList.add('active');
+    //             });
+    //         });
 
-            searchButton.addEventListener('click', performSearch);
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') performSearch();
-            });
-        });
-    </script>
+    //         searchButton.addEventListener('click', performSearch);
+    //         searchInput.addEventListener('keypress', (e) => {
+    //             if (e.key === 'Enter') performSearch();
+    //         });
+    //     });
+    // </script>//
 </body>
 </html>
